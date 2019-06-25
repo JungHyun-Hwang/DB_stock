@@ -1,0 +1,14 @@
+C:\TMPCoding\DB_stock\DB_stock\bin\Debug\DB_stock.exe.config
+C:\TMPCoding\DB_stock\DB_stock\bin\Debug\DB_stock.exe
+C:\TMPCoding\DB_stock\DB_stock\bin\Debug\DB_stock.pdb
+C:\TMPCoding\DB_stock\DB_stock\bin\Debug\HtmlAgilityPack.dll
+C:\TMPCoding\DB_stock\DB_stock\bin\Debug\HtmlAgilityPack.pdb
+C:\TMPCoding\DB_stock\DB_stock\bin\Debug\HtmlAgilityPack.xml
+C:\TMPCoding\DB_stock\DB_stock\obj\Debug\DB_stock.csprojAssemblyReference.cache
+C:\TMPCoding\DB_stock\DB_stock\obj\Debug\DB_stock.Properties.Resources.resources
+C:\TMPCoding\DB_stock\DB_stock\obj\Debug\DB_stock.csproj.GenerateResource.cache
+C:\TMPCoding\DB_stock\DB_stock\obj\Debug\DB_stock.csproj.CoreCompileInputs.cache
+C:\TMPCoding\DB_stock\DB_stock\obj\Debug\DB_stock.csproj.CopyComplete
+C:\TMPCoding\DB_stock\DB_stock\obj\Debug\DB_stock.exe
+C:\TMPCoding\DB_stock\DB_stock\obj\Debug\DB_stock.pdb
+C:\TMPCoding\DB_stock\DB_stock\obj\Debug\DB_stock.Main.resources
