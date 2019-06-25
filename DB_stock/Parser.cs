@@ -69,7 +69,7 @@ namespace DB_stock
                     .SelectNodes(RootNode + "/td[1]/span")
                     .First().InnerText);
             //1 - losings_price
-            datas.Add(htmlDoc.DocumentNodess
+            datas.Add(htmlDoc.DocumentNode
                 .SelectNodes(RootNode + "/td[2]/span")
                 .First().InnerText.Replace("," ,""));
             //2 - "+", "-", ""
