@@ -46,28 +46,68 @@ namespace DB_stock
             List<string> AgoPrices = new List<string>();    //전일비
             for (int i = 3; i <= 15; i++)
             {
-                string strnode = "/html/body/table[1]/tr[" + i.ToString() + "]";
+                string RootNode = "/html/body/table[1]/tr[" + i.ToString() + "]";
                 if (i == 8 || i == 9 || i == 10)
                     continue;
-                var date = htmlDoc.DocumentNode
-                    .SelectNodes(strnode + "/td[1]/span")
-                    .First().InnerText;
-                var closings_price = htmlDoc.DocumentNode
-                    .SelectNodes(strnode + "/td[2]/span")
-                    .First().InnerText;
-                var agoprice1 = htmlDoc.DocumentNode
-                    .SelectNodes("")
-                    .First().InnerText;
-                var agoprice2 = htmlDoc.DocumentNode
-                    .SelectNodes("")
-                    .First().InnerText;
-                Dates.Add(date);
-                ClosingsPrices.Add(closings_price);
+                List<string> datas = ReturnDatas(htmlDoc, i);
+                Dates.Add(datas[0]);
+                ClosingsPrices.Add(datas[1]);
+
             }
             for(int i = 0; i < Dates.Count(); i++)
             {
-                MessageBox.Show("date : " + Dates[i] +"\nclosings : " + ClosingsPrices[i]);
+                MessageBox.Show("date : " + Dates[i] +",\nclosings : " + ClosingsPrices[i]+",",(i+1).ToString());
             }
+        }
+
+        static List<string> ReturnDatas(HtmlAgilityPack.HtmlDocument htmlDoc, int tr_num)
+        {
+            List<string> datas = new List<string>();
+            string RootNode = "/html/body/table[1]/tr[" + tr_num.ToString() + "]";
+            //0 - date
+            datas.Add(htmlDoc.DocumentNode
+                    .SelectNodes(RootNode + "/td[1]/span")
+                    .First().InnerText);
+            //1 - losings_price
+            datas.Add(htmlDoc.DocumentNodess
+                .SelectNodes(RootNode + "/td[2]/span")
+                .First().InnerText.Replace("," ,""));
+            //2 - "+", "-", ""
+            datas.Add(Getagoprice1(htmlDoc, RootNode));
+
+            //3 - agoprice_value
+            datas.Add(htmlDoc.DocumentNode
+                    .SelectNodes(RootNode + "/td[3]/span")
+                    .First().InnerText
+                    .Replace(" ", "").Replace("\n", "").Replace("\t", ""));
+            return datas;
+        }
+        static string Getagoprice1(HtmlAgilityPack.HtmlDocument htmlDoc, string RootNode)
+        {
+            string agoprice1 = "";
+            try
+            {
+                agoprice1 = htmlDoc.DocumentNode
+                    .SelectNodes(RootNode + "/td[3]/img")
+                    .First().Attributes["alt"].Value;
+            }
+            catch (ArgumentNullException)
+            {
+                agoprice1 = "n/a";
+            }
+            if (agoprice1.Equals("상승"))
+            {
+                agoprice1 = "+";
+            }
+            else if (agoprice1.Equals("하락"))
+            {
+                agoprice1 = "-";
+            }
+            else if (agoprice1.Equals("n/a"))
+            {
+                agoprice1 = "";
+            }
+            return agoprice1;
         }
     }
 }
