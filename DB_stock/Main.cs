@@ -52,15 +52,16 @@ namespace DB_stock
 
         private void KOSPI_Click(object sender, EventArgs e)
         {
-            string url = "https://finance.naver.com/sise/sise_index_day.nhn?code=KOSPI&page=1";
-            Parser parser = new Parser(url);
-            //parser.test();
+            string KOSPI = "https://finance.naver.com/sise/sise_index_day.nhn?code=KOSPI&page=1";
+            KOS k = new KOS(KOSPI);
+            //Parser parser = new Parser(url);
+            //parser.Parse();
         }
 
         private void KOSDAQ_Click(object sender, EventArgs e)
         {
-            string url = "https://finance.naver.com/sise/sise_index_day.nhn?code=KOSDAQ&page=1";
-            Parser parser = new Parser(url);
+            string KOSDAQ = "https://finance.naver.com/sise/sise_index_day.nhn?code=KOSDAQ&page=1";
+            //Parser parser = new Parser(url);
             //parser.test();
         }
     }

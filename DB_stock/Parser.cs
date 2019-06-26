@@ -20,10 +20,6 @@ namespace DB_stock
         private List<string> LowValues;     //저가
         private List<string> Volumes;       //거래량
 
-        public Parser(string url)
-        {
-            this.url = url;
-        }
         public Parser(string url, string company_name)
         {
             this.url = url;
@@ -52,7 +48,6 @@ namespace DB_stock
             
             for (int i = 3; i <= 15; i++)
             {
-                string RootNode = "/html/body/table[1]/tr[" + i.ToString() + "]";
                 if (i == 8 || i == 9 || i == 10)
                     continue;
                 List<string> datas = ReturnDatas(htmlDoc, i);
@@ -81,43 +76,18 @@ namespace DB_stock
         {
             List<string> datas = new List<string>();
             string RootNode = "/html/body/table[1]/tr[" + tr_num.ToString() + "]";
-            //0 - date
-            datas.Add(htmlDoc.DocumentNode
-                    .SelectNodes(RootNode + "/td[1]/span")
-                    .First().InnerText);
-
-            //1 - losings_price
-            datas.Add(htmlDoc.DocumentNode
-                .SelectNodes(RootNode + "/td[2]/span")
-                .First().InnerText.Replace("," ,""));
-
-            //2 - "+", "-", ""
-            datas.Add(Getagoprice1(htmlDoc, RootNode));
-
-            //3 - agoprice_value
-            datas.Add(htmlDoc.DocumentNode
-                    .SelectNodes(RootNode + "/td[3]/span")
-                    .First().InnerText
-                    .Replace(" ", "").Replace("\n", "").Replace("\t", "").Replace(",",""));
-            //4 - MarketValue
-            datas.Add(htmlDoc.DocumentNode
-                    .SelectNodes(RootNode + "/td[4]/span")
-                    .First().InnerText.Replace(",", ""));
-
-            //5 - HighValue
-            datas.Add(htmlDoc.DocumentNode
-                    .SelectNodes(RootNode + "/td[5]/span")
-                    .First().InnerText.Replace(",", ""));
-
-            //6 - LowValue
-            datas.Add(htmlDoc.DocumentNode
-                    .SelectNodes(RootNode + "/td[6]/span")
-                    .First().InnerText.Replace(",", ""));
-
-            //7 - Volume
-            datas.Add(htmlDoc.DocumentNode
-                    .SelectNodes(RootNode + "/td[7]/span")
-                    .First().InnerText.Replace(",", ""));
+            for(int i = 1; i <= 7; i++)
+            {
+                if (i == 3)
+                {
+                    datas.Add(Getagoprice1(htmlDoc, RootNode));
+                    datas.Add(GetNode(htmlDoc, RootNode, i).Replace("\n", "").Replace("\t", "").Replace(",", ""));
+                }
+                else
+                {
+                    datas.Add(GetNode(htmlDoc, RootNode, i));
+                }
+            }
             return datas;
         }
         static string Getagoprice1(HtmlAgilityPack.HtmlDocument htmlDoc, string RootNode)
@@ -146,6 +116,12 @@ namespace DB_stock
                 agoprice1 = "";
             }
             return agoprice1;
+        }
+        static string GetNode(HtmlAgilityPack.HtmlDocument htmlDoc, string RootNode, int num)
+        {
+            return htmlDoc.DocumentNode
+                    .SelectNodes(RootNode + "/td["+num.ToString()+"]/span")
+                    .First().InnerText.Replace(",", "");
         }
     }
 }
