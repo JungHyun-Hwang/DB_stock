@@ -54,14 +54,14 @@ namespace DB_stock
         {
             string url = "https://finance.naver.com/sise/sise_index_day.nhn?code=KOSPI&page=1";
             Parser parser = new Parser(url);
-            parser.test();
+            //parser.test();
         }
 
         private void KOSDAQ_Click(object sender, EventArgs e)
         {
             string url = "https://finance.naver.com/sise/sise_index_day.nhn?code=KOSDAQ&page=1";
             Parser parser = new Parser(url);
-            parser.test();
+            //parser.test();
         }
     }
 }
