@@ -46,23 +46,22 @@ namespace DB_stock
                 MessageBox.Show("잘못된 링크입니다.", "에러", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            Parser parser = new Parser(url, company_name);
+            StockParser parser = new StockParser(url, company_name);
             parser.Parse();
         }
 
         private void KOSPI_Click(object sender, EventArgs e)
         {
             string KOSPI = "https://finance.naver.com/sise/sise_index_day.nhn?code=KOSPI&page=1";
-            KOS k = new KOS(KOSPI);
-            //Parser parser = new Parser(url);
-            //parser.Parse();
+            KosParser k = new KosParser(KOSPI);
+            k.Parse();
         }
 
         private void KOSDAQ_Click(object sender, EventArgs e)
         {
             string KOSDAQ = "https://finance.naver.com/sise/sise_index_day.nhn?code=KOSDAQ&page=1";
-            //Parser parser = new Parser(url);
-            //parser.test();
+            KosParser k = new KosParser(KOSDAQ);
+            k.Parse();
         }
     }
 }
