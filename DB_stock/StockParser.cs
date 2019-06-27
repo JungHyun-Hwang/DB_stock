@@ -39,28 +39,32 @@ namespace DB_stock
         public void Parse()
         {
             InitList();
-            var web = new HtmlWeb();
-            web.OverrideEncoding = Encoding.Default;
-            web.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36";
-            var htmlDoc = web.Load(url);
-            ///html/body/table[1]/tbody/tr[*]
-            //MessageBox.Show(trs.OuterHtml);
             
-            for (int i = 3; i <= 15; i++)
+            const string page = "&page=";
+            for(int cnt = 1; cnt <= 10; cnt++)
             {
-                if (i == 8 || i == 9 || i == 10)
-                    continue;
-                string RootNode = "/html/body/table[1]/tr[" + i.ToString() + "]";
-                List<string> datas = ParserFunction.ReturnDatas(htmlDoc, RootNode, len:7);
-                Dates.Add(datas[0]);
-                ClosingsPrices.Add(datas[1]);
-                AgoPrices.Add(datas[2] + datas[3]);
-                MarketValues.Add(datas[4]);
-                HighValues.Add(datas[5]);
-                LowValues.Add(datas[6]);
-                Volumes.Add(datas[7]);
+                string cur_page = page + cnt.ToString();
+                string cur_url = url + cur_page;
+                var web = new HtmlWeb();
+                web.OverrideEncoding = Encoding.Default;
+                web.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36";
+                var htmlDoc = web.Load(cur_url);
+                for (int i = 3; i <= 15; i++)
+                {
+                    if (i == 8 || i == 9 || i == 10)
+                        continue;
+                    string RootNode = "/html/body/table[1]/tr[" + i.ToString() + "]";
+                    List<string> datas = ParserFunction.ReturnDatas(htmlDoc, RootNode, len: 7);
+                    Dates.Add(datas[0]);
+                    ClosingsPrices.Add(datas[1]);
+                    AgoPrices.Add(datas[2] + datas[3]);
+                    MarketValues.Add(datas[4]);
+                    HighValues.Add(datas[5]);
+                    LowValues.Add(datas[6]);
+                    Volumes.Add(datas[7]);
+                }
             }
-            for(int i = 0; i < Dates.Count(); i++)
+            for(int i = 10; i < /*Dates.Count()*/20; i++)
             {
                 MessageBox.Show("date : " + Dates[i] + ","
                     + "\nclosings : "  + ClosingsPrices[i] + ","

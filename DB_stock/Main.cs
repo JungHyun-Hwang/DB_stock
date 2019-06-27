@@ -37,7 +37,7 @@ namespace DB_stock
                             .SelectNodes("//*[@id=\"middle\"]/div[1]/div[1]/h2/a")
                             .First().InnerText;
                 string[] urls = url.Split(new string[] { "code=" }, StringSplitOptions.None);
-                url = "https://finance.naver.com/item/sise_day.nhn?code=" + urls[1] + "&page=1";
+                url = "https://finance.naver.com/item/sise_day.nhn?code=" + urls[1];
                 //https://finance.naver.com/item/sise_day.nhn?code=005930&page=1
                 URL_BOX.Text = url;
             }
@@ -52,14 +52,14 @@ namespace DB_stock
 
         private void KOSPI_Click(object sender, EventArgs e)
         {
-            string KOSPI = "https://finance.naver.com/sise/sise_index_day.nhn?code=KOSPI&page=1";
+            string KOSPI = "https://finance.naver.com/sise/sise_index_day.nhn?code=KOSPI";
             KosParser k = new KosParser(KOSPI);
             k.Parse();
         }
 
         private void KOSDAQ_Click(object sender, EventArgs e)
         {
-            string KOSDAQ = "https://finance.naver.com/sise/sise_index_day.nhn?code=KOSDAQ&page=1";
+            string KOSDAQ = "https://finance.naver.com/sise/sise_index_day.nhn?code=KOSDAQ";
             KosParser k = new KosParser(KOSDAQ);
             k.Parse();
         }

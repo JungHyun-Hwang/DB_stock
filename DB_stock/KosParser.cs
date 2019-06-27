@@ -35,25 +35,32 @@ namespace DB_stock
 
         public void Parse()
         {
+            const string page = "&page=";
             InitList();
-            var web = new HtmlWeb();
-            web.OverrideEncoding = Encoding.Default;
-            web.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36";
-            var htmlDoc = web.Load(url);
-            for (int i = 3; i <= 12; i++)
+            for(int cnt = 1; cnt <= 10; cnt++)
             {
-                string RootNode = "/html/body/div/table[1]/tr[" + i.ToString() + "]";
-                if (i == 6 || i == 7 || i == 8 || i == 9)
-                    continue;
-                List<string> datas = ParserFunction.ReturnDatas(htmlDoc, RootNode, len:6);
-                Dates.Add(datas[0]);
-                TradePrices.Add(datas[1]);
-                AgoPrices.Add(datas[2] + datas[3]);
-                Fluctuations.Add(datas[4].Replace("\n", "").Replace("\t", ""));
-                Volumes.Add(datas[5]);
-                Payments.Add(datas[6]);
+                string cur_page = page + cnt.ToString();
+                string cur_url = url + cur_page;
+                var web = new HtmlWeb();
+                web.OverrideEncoding = Encoding.Default;
+                web.UserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36";
+                var htmlDoc = web.Load(cur_url);
+                for (int i = 3; i <= 12; i++)
+                {
+                    string RootNode = "/html/body/div/table[1]/tr[" + i.ToString() + "]";
+                    if (i == 6 || i == 7 || i == 8 || i == 9)
+                        continue;
+                    List<string> datas = ParserFunction.ReturnDatas(htmlDoc, RootNode, len: 6);
+                    Dates.Add(datas[0]);
+                    TradePrices.Add(datas[1]);
+                    AgoPrices.Add(datas[2] + datas[3]);
+                    Fluctuations.Add(datas[4].Replace("\n", "").Replace("\t", ""));
+                    Volumes.Add(datas[5]);
+                    Payments.Add(datas[6]);
+                }
             }
-            for (int i = 0; i < Dates.Count(); i++)
+            
+            for (int i = 10; i < /*Dates.Count()*/20; i++)
             {
                 MessageBox.Show("date : " + Dates[i] + ","
                     + "\nclosings : " + TradePrices[i] + ","
@@ -63,6 +70,7 @@ namespace DB_stock
                     + "\nLowValues : " + Payments[i] + ","
                     , (i + 1).ToString());
             }
+            MessageBox.Show(Dates.Count().ToString());
         }
     }
 }
