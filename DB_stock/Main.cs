@@ -47,7 +47,8 @@ namespace DB_stock
                 return;
             }
             StockParser parser = new StockParser(url, company_name);
-            parser.Parse();
+            Write_Excel we = new Write_Excel(parser.Parse());
+            we.PrintExcel();
         }
 
         private void KOSPI_Click(object sender, EventArgs e)

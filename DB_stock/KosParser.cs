@@ -33,8 +33,9 @@ namespace DB_stock
             Payments = new List<string>();
         }
 
-        public void Parse()
+        public List<List<string>> Parse()
         {
+            List<List<string>> res = new List<List<string>>();
             const string page = "&page=";
             InitList();
             for(int cnt = 1; cnt <= 10; cnt++)
@@ -71,6 +72,13 @@ namespace DB_stock
                     , (i + 1).ToString());
             }
             MessageBox.Show(Dates.Count().ToString());
+            res.Add(Dates);
+            res.Add(TradePrices);
+            res.Add(AgoPrices);
+            res.Add(Fluctuations);
+            res.Add(Volumes);
+            res.Add(Payments);
+            return res;
         }
     }
 }
