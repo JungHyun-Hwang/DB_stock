@@ -43,7 +43,7 @@ namespace DB_stock
             List<List<string>> res = new List<List<string>>();
 
             const string page = "&page=";
-            for(int cnt = 1; cnt <= 10; cnt++)
+            for(int cnt = 1; cnt <= 12; cnt++)
             {
                 string cur_page = page + cnt.ToString();
                 string cur_url = url + cur_page;

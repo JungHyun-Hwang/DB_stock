@@ -32,9 +32,11 @@ namespace DB_stock
                 if (System.IO.File.Exists(ExcelPath))
                 {
                     //wb = excelApp.Workbooks.Add(miss);
-                    wb = excelApp.Workbooks.Open(ExcelPath, miss, false, miss, miss, miss, miss, miss, miss, miss, miss, miss, miss, miss, miss);
+                    wb = excelApp.Workbooks.Open(Filename:ExcelPath);
                     int sheet_cnt = wb.Worksheets.Count;
-                    ws = (Excel.Worksheet)wb.Sheets["Sheet" + (sheet_cnt + 1).ToString()];
+                    ws = wb.Worksheets.Add(After:wb.Sheets["Sheet"+sheet_cnt.ToString()]);
+                    sheet_cnt = wb.Worksheets.Count;
+                    ws = (Excel.Worksheet)wb.Sheets["Sheet" + sheet_cnt.ToString()];
                 }
                 else
                 {
@@ -69,6 +71,13 @@ namespace DB_stock
                 ws.Cells[1, 5] = "고가";
                 ws.Cells[1, 6] = "저가";
                 ws.Cells[1, 7] = "거래량";
+                for(int i = 0; i < datas.Count; i++)
+                {
+                    for(int j = 0; j < datas[i].Count; j++)
+                    {
+                        ws.Cells[j + 2, i + 1] = datas[i][j];
+                    }
+                }
 
             }
             else if(datas.Count == 6)
@@ -79,6 +88,13 @@ namespace DB_stock
                 ws.Cells[1, 4] = "등락률";
                 ws.Cells[1, 5] = "거래량";
                 ws.Cells[1, 6] = "거래대금";
+                for(int i = 0; i < datas.Count; i++)
+                {
+                    for(int j = 0; j < datas[i].Count; j++)
+                    {
+                        ws.Cells[j + 2, i + 1] = datas[i][j];
+                    }
+                }
             }
         }
     }
