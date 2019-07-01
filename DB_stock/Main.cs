@@ -55,14 +55,16 @@ namespace DB_stock
         {
             string KOSPI = "https://finance.naver.com/sise/sise_index_day.nhn?code=KOSPI";
             KosParser k = new KosParser(KOSPI);
-            k.Parse();
+            Write_Excel we = new Write_Excel(k.Parse());
+            we.PrintExcel();
         }
 
         private void KOSDAQ_Click(object sender, EventArgs e)
         {
             string KOSDAQ = "https://finance.naver.com/sise/sise_index_day.nhn?code=KOSDAQ";
             KosParser k = new KosParser(KOSDAQ);
-            k.Parse();
+            Write_Excel we = new Write_Excel(k.Parse());
+            we.PrintExcel();
         }
     }
 }

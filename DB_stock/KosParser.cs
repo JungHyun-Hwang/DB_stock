@@ -71,7 +71,6 @@ namespace DB_stock
                     + "\nLowValues : " + Payments[i] + ","
                     , (i + 1).ToString());
             }
-            MessageBox.Show(Dates.Count().ToString());
             res.Add(Dates);
             res.Add(TradePrices);
             res.Add(AgoPrices);
