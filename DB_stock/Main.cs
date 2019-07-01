@@ -23,8 +23,16 @@ namespace DB_stock
         private void button1_Click(object sender, EventArgs e)
         {
             /**
-            https://finance.naver.com/sise/sise_index.nhn?code=KOSPI
+            삼성전자
             https://finance.naver.com/item/sise.nhn?code=005930
+            SK 텔레콤
+            https://finance.naver.com/item/main.nhn?code=017670
+            LG
+            https://finance.naver.com/item/main.nhn?code=003550
+            기아차
+            https://finance.naver.com/item/main.nhn?code=000270
+            카카오
+            https://finance.naver.com/item/main.nhn?code=035720
             **/
             string url = URL_BOX.Text;
             string company_name = "";
@@ -38,7 +46,6 @@ namespace DB_stock
                             .First().InnerText;
                 string[] urls = url.Split(new string[] { "code=" }, StringSplitOptions.None);
                 url = "https://finance.naver.com/item/sise_day.nhn?code=" + urls[1];
-                //https://finance.naver.com/item/sise_day.nhn?code=005930&page=1
                 URL_BOX.Text = url;
             }
             catch (Exception)
@@ -47,7 +54,7 @@ namespace DB_stock
                 return;
             }
             StockParser parser = new StockParser(url, company_name);
-            Write_Excel we = new Write_Excel(parser.Parse());
+            Write_Excel we = new Write_Excel(parser.Parse(), parser.GetName);
             we.PrintExcel();
         }
 
@@ -55,7 +62,7 @@ namespace DB_stock
         {
             string KOSPI = "https://finance.naver.com/sise/sise_index_day.nhn?code=KOSPI";
             KosParser k = new KosParser(KOSPI);
-            Write_Excel we = new Write_Excel(k.Parse());
+            Write_Excel we = new Write_Excel(k.Parse(), "KOSPI");
             we.PrintExcel();
         }
 
@@ -63,7 +70,7 @@ namespace DB_stock
         {
             string KOSDAQ = "https://finance.naver.com/sise/sise_index_day.nhn?code=KOSDAQ";
             KosParser k = new KosParser(KOSDAQ);
-            Write_Excel we = new Write_Excel(k.Parse());
+            Write_Excel we = new Write_Excel(k.Parse(), "KOSDAQ");
             we.PrintExcel();
         }
     }

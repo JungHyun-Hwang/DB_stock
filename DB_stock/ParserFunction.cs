@@ -11,8 +11,8 @@ namespace DB_stock
         public static List<string> ReturnDatas(HtmlAgilityPack.HtmlDocument htmlDoc, string RootNode, int len)
         {
             List<string> datas = new List<string>();
-            
-            for (int i = 1; i <= len; i++)
+            datas.Add(GetNode(htmlDoc, RootNode, 1).Replace(".","-"));
+            for (int i = 2; i <= len; i++)
             {
                 if (i == 3)
                 {
@@ -35,7 +35,7 @@ namespace DB_stock
                     .SelectNodes(RootNode + "/td[3]/img")
                     .First().Attributes["alt"].Value;
             }
-            catch (ArgumentNullException)
+            catch
             {
                 agoprice1 = "n/a";
             }

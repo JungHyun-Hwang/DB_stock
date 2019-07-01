@@ -20,6 +20,10 @@ namespace DB_stock
         private List<string> LowValues;     //저가
         private List<string> Volumes;       //거래량
         
+        public string GetName
+        {
+            get { return company_name; }
+        }
 
         public StockParser(string url, string company_name)
         {
@@ -65,17 +69,6 @@ namespace DB_stock
                     LowValues.Add(datas[6]);
                     Volumes.Add(datas[7]);
                 }
-            }
-            for(int i = 10; i < /*Dates.Count()*/20; i++)
-            {
-                MessageBox.Show("date : " + Dates[i] + ","
-                    + "\nclosings : "  + ClosingsPrices[i] + ","
-                    + "\nAgoPrices : " + AgoPrices[i] + ","
-                    + "\nMarketValues : " + MarketValues[i] + ","
-                    + "\nHighValues : " + HighValues[i] + ","
-                    + "\nLowValues : " + LowValues[i] + ","
-                    + "\nVolumes : " + Volumes[i] + ","
-                    , (i+1).ToString());
             }
             res.Add(Dates);
             res.Add(ClosingsPrices);

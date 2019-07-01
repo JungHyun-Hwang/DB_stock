@@ -60,17 +60,6 @@ namespace DB_stock
                     Payments.Add(datas[6]);
                 }
             }
-            
-            for (int i = 10; i < /*Dates.Count()*/20; i++)
-            {
-                MessageBox.Show("date : " + Dates[i] + ","
-                    + "\nclosings : " + TradePrices[i] + ","
-                    + "\nAgoPrices : " + AgoPrices[i] + ","
-                    + "\nMarketValues : " + Fluctuations[i] + ","
-                    + "\nHighValues : " + Volumes[i] + ","
-                    + "\nLowValues : " + Payments[i] + ","
-                    , (i + 1).ToString());
-            }
             res.Add(Dates);
             res.Add(TradePrices);
             res.Add(AgoPrices);

@@ -12,15 +12,16 @@ namespace DB_stock
     class Write_Excel
     {
         List<List<string>> datas;
-        public Write_Excel(List<List<string>> datas)
+        string CompanyName;
+        public Write_Excel(List<List<string>> datas, string CompanyName)
         {
             this.datas = datas;
+            this.CompanyName = CompanyName;
         }
 
         public void PrintExcel()
         {
             object miss = Type.Missing;
-            MessageBox.Show(datas[0].Count().ToString());
             Excel.Application excelApp = null;
             Excel.Workbook wb = null;
             Excel.Worksheet ws = null;
@@ -43,7 +44,7 @@ namespace DB_stock
                     wb = excelApp.Workbooks.Add(miss);
                     ws = (Excel.Worksheet)wb.Sheets["Sheet1"];
                 }
-                WriteCell(ws, datas);
+                WriteCell(ws, datas, CompanyName);
                 wb.SaveAs(ExcelPath, miss, miss, miss, miss, miss,
                     Excel.XlSaveAsAccessMode.xlExclusive, Excel.XlSaveConflictResolution.xlLocalSessionChanges,
                     miss, miss, miss, miss);
@@ -60,42 +61,44 @@ namespace DB_stock
                 excelApp.Quit();
             }
         }
-        static void WriteCell(Excel.Worksheet ws, List<List <string>> datas)
+        static void WriteCell(Excel.Worksheet ws, List<List <string>> datas, string CompanyName)
         {
+            ws.Cells[1, 1] = CompanyName;
             if(datas.Count == 7)
             {
-                ws.Cells[1, 1] = "날짜";
-                ws.Cells[1, 2] = "종가";
-                ws.Cells[1, 3] = "전일비";
-                ws.Cells[1, 4] = "시가";
-                ws.Cells[1, 5] = "고가";
-                ws.Cells[1, 6] = "저가";
-                ws.Cells[1, 7] = "거래량";
+                ws.Cells[2, 1] = "날짜";
+                ws.Cells[2, 2] = "종가";
+                ws.Cells[2, 3] = "전일비";
+                ws.Cells[2, 4] = "시가";
+                ws.Cells[2, 5] = "고가";
+                ws.Cells[2, 6] = "저가";
+                ws.Cells[2, 7] = "거래량";
                 for(int i = 0; i < datas.Count; i++)
                 {
                     for(int j = 0; j < datas[i].Count; j++)
                     {
-                        ws.Cells[j + 2, i + 1] = datas[i][j];
+                        ws.Cells[j + 3, i + 1] = datas[i][j];
                     }
                 }
 
             }
             else if(datas.Count == 6)
             {
-                ws.Cells[1, 1] = "날짜";
-                ws.Cells[1, 2] = "체결가";
-                ws.Cells[1, 3] = "전일비";
-                ws.Cells[1, 4] = "등락률";
-                ws.Cells[1, 5] = "거래량";
-                ws.Cells[1, 6] = "거래대금";
+                ws.Cells[2, 1] = "날짜";
+                ws.Cells[2, 2] = "체결가";
+                ws.Cells[2, 3] = "전일비";
+                ws.Cells[2, 4] = "등락률";
+                ws.Cells[2, 5] = "거래량";
+                ws.Cells[2, 6] = "거래대금";
                 for(int i = 0; i < datas.Count; i++)
                 {
                     for(int j = 0; j < datas[i].Count; j++)
                     {
-                        ws.Cells[j + 2, i + 1] = datas[i][j];
+                        ws.Cells[j + 3, i + 1] = datas[i][j];
                     }
                 }
             }
+            ws.Columns.AutoFit();
         }
     }
 }
